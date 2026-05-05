@@ -3,9 +3,6 @@ package com.wedding.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- * Application user with encapsulation; persisted in the {@code users} table.
- */
 public class User {
 
     private long id;
