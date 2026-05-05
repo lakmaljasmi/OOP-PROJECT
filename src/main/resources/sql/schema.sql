@@ -24,6 +24,18 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS bookings (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    vendor_id BIGINT NOT NULL,
+    event_date DATE NOT NULL,
+    status VARCHAR(32) NOT NULL,
+    notes TEXT NOT NULL,
+    created_at DATE NOT NULL,
+    CONSTRAINT fk_booking_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_booking_vendor FOREIGN KEY (vendor_id) REFERENCES vendors (id) ON DELETE RESTRICT
+);
+
 INSERT INTO vendors (id, vendor_type, business_name, contact_email, contact_phone, description, daily_rate, extra1, extra2) VALUES
 (1, 'PHOTOGRAPHER', 'Lumière Studios', 'hello@lumiereweddings.com', '555-0201', 'Editorial and candid wedding photography with same-day previews.', 1800.00, 'Editorial natural light', '10'),
 (2, 'CATERING', 'Tuscany Table Catering', 'events@tuscanytable.com', '555-0202', 'Family-style Italian feasts with seasonal antipasti and plated mains.', 4200.00, 'Italian', 'true'),
@@ -33,3 +45,7 @@ INSERT INTO vendors (id, vendor_type, business_name, contact_email, contact_phon
 INSERT INTO users (id, username, password_hash, email, full_name, phone, `role`, created_at) VALUES
 (1, 'admin', 'a9741fa463e7c05beb48797235f1db6ba1ededc64257a71683cf651ea012f605', 'planner@wedding-suite.com', 'System Administrator', '555-0100', 'ADMIN', '2025-01-15'),
 (2, 'couple1', '4234d42cdf1c9b3c3b4b9172232148dacd0c5e5e8116982111c8642999274bed', 'jamie.alex@example.com', 'Jamie & Alex Morgan', '555-0142', 'CUSTOMER', '2025-02-01');
+
+INSERT INTO bookings (id, user_id, vendor_id, event_date, status, notes, created_at) VALUES
+(1, 2, 1, '2026-09-12', 'CONFIRMED', 'Ceremony and reception coverage at Riverside Estate.', '2025-03-01'),
+(2, 2, 2, '2026-09-13', 'PENDING', 'Evening reception for 120 guests — tasting completed.', '2025-03-02');
