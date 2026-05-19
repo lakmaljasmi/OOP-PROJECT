@@ -15,10 +15,6 @@ import java.util.Locale;
 /**
  * Base controller class used by all feature servlets.
  *
- * <p>Viva note:
- * this is inheritance in OOP. Common behavior (session access, auth checks,
- * parameter validation) is centralized here so child servlets stay focused on
- * business use-cases (Booking, Payment, Vendor, etc.).</p>
  */
 public abstract class BaseServlet extends HttpServlet {
 
