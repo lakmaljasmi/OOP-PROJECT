@@ -16,10 +16,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@WebFilter(urlPatterns = {
-        "/dashboard", "/bookings", "/payments", "/profile"
-})
-public class AuthenticationFilter implements Filter {
+@WebFilter(urlPatterns = {"/admin/*"})
+public class AdminGateFilter implements Filter {
 
     private static final String SESSION_USER = "currentUser";
 
@@ -42,6 +40,10 @@ public class AuthenticationFilter implements Filter {
             }
             String next = URLEncoder.encode(uri, StandardCharsets.UTF_8);
             resp.sendRedirect(req.getContextPath() + "/login?next=" + next);
+            return;
+        }
+        if (!u.isAdmin()) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Administrator access required.");
             return;
         }
         chain.doFilter(request, response);
